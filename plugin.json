@@ -2,8 +2,8 @@
     "name": "siyuan-plugin-toolbar-plus",
     "author": "zuoez02",
     "url": "https://github.com/zuoez02/siyuan-plugin-toolbar-plus",
-    "version": "1.1.0",
-    "minAppVersion": "2.9.4",
+    "version": "1.2.0",
+    "minAppVersion": "2.10.13",
     "displayName": {
         "default": "工具栏Plus"
     },

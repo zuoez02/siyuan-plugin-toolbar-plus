@@ -1,7 +1,7 @@
 const { Plugin } = require("siyuan");
 
 let styleContent = `
-.protyle-toolbar {
+.layout-tab-container > .protyle > .protyle-toolbar {
     display: flex !important;
     position: absolute !important;
     top: 30px !important;
@@ -73,11 +73,22 @@ function setBlockAttrs(block, attrs) {
 module.exports = class ToolbarPlusPlugin extends Plugin {
   currentConf = Object.assign({}, defaultConf);
 
+  protyles = new Map();
+
+  toolbars = new Set();
+
   async onload() {
     this.createStyle();
     watchCurrentPageChange(() => {
       this.injectButton();
     });
+
+    this.eventBus.on('loaded-protyle-static', ({ detail }) => {
+      if (detail.protyle) {
+        this.protyles.set(detail.protyle.toolbar.element, detail.protyle);
+        this.injectButton();
+      }
+    })
   }
 
   createStyle() {
@@ -128,9 +139,66 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
         button.classList.remove("b3-tooltips__ne");
         button.classList.add("b3-tooltips__se");
       }
+      this.createDivide(toolbar);
       this.createIndentButton(toolbar);
       this.createOutdentButton(toolbar);
+      this.createUndoButton(toolbar);
+      this.createRedoButton(toolbar);
     }
+  }
+
+  createDivide(toolbar) {
+    if (toolbar.querySelector('div#divide-1')) {
+      return;
+    }
+    toolbar.querySelector('button[data-type="block-ref"]').insertAdjacentHTML('beforeBegin', '<div id="divide-1" class="protyle-toolbar__divider b3-tooltips__se"></div>')
+  }
+
+  createUndoButton(toolbar) {
+    if (toolbar.querySelector("#undo")) {
+      return;
+    }
+    const button = document.createElement("button");
+    button.classList.add(
+      "protyle-toolbar__item",
+      "b3-tooltips",
+      "b3-tooltips__se"
+    );
+    button.setAttribute("aria-label", "撤销");
+    button.innerHTML = '<svg><use xlink:href="#iconUndo"></use></svg>';
+    button.id = "undo";
+    const protyle = this.protyles.get(toolbar);
+    if (!protyle) {
+      return;
+    }
+    button.addEventListener("click", () => {
+      protyle.undo.undo(protyle);
+    });
+    toolbar.querySelector('#divide-1').insertAdjacentElement('beforeBegin', button);
+  }
+
+  createRedoButton(toolbar) {
+    if (toolbar.querySelector("#redo")) {
+      return;
+    }
+    const button = document.createElement("button");
+    button.classList.add(
+      "protyle-toolbar__item",
+      "b3-tooltips",
+      "b3-tooltips__se"
+    );
+    button.setAttribute("aria-label", "重做");
+    button.innerHTML = '<svg><use xlink:href="#iconRedo"></use></svg>';
+    button.id = "redo";
+    const protyle = this.protyles.get(toolbar);
+    if (!protyle) {
+      return;
+    }
+    button.addEventListener("click", () => {
+      protyle.undo.redo(protyle);
+    });
+    toolbar.appendChild(button);
+    toolbar.querySelector('#divide-1').insertAdjacentElement('beforeBegin', button);
   }
 
   createIndentButton(toolbar) {
