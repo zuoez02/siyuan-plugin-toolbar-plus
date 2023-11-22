@@ -1,4 +1,4 @@
-const { Plugin } = require("siyuan");
+const { Plugin, Menu } = require("siyuan");
 
 let styleContent = `
 .layout-tab-container > .protyle > .protyle-toolbar {
@@ -77,11 +77,55 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
 
   toolbars = new Set();
 
+  config = {
+    showToolbarOnTop: true,
+  }
+
+  async loadStorage() {
+    const data = await this.loadData('config.json');
+    if (!data) {
+      this.saveStorage();
+    } else {
+      Object.assign(this.config, data);
+    }
+  }
+
+  async saveStorage() {
+    await this.saveData('config.json', this.config);
+  }
+
   async onload() {
-    this.createStyle();
+    this.loadStorage().then(() => {
+      if (this.config.showToolbarOnTop) {
+        this.createStyle();
+      }
+    })
     watchCurrentPageChange(() => {
       this.injectButton();
     });
+
+    const topBarElement = this.addTopBar({
+      icon: "iconRefresh",
+      title: this.i18n.title,
+      position: "right",
+      callback: () => {
+        let rect = topBarElement.getBoundingClientRect();
+        const menu = new Menu("toolarPlusMenu");
+        menu.addItem({
+            icon: "iconRefresh",
+            label: this.i18n.toggleShowToolbarOnTop,
+            click: () => {
+                this.toggleShowToolbarOnTop();
+            }
+        });
+        menu.open({
+          x: rect.right,
+          y: rect.bottom,
+          isLeft: true,
+      });
+      }
+    });
+
 
     this.eventBus.on('loaded-protyle-static', ({ detail }) => {
       if (detail.protyle) {
@@ -89,6 +133,17 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
         this.injectButton();
       }
     })
+  }
+
+  toggleShowToolbarOnTop() {
+    if (this.config.showToolbarOnTop) {
+      this.destroyStyle();
+      this.config.showToolbarOnTop = false;
+    } else {
+      this.createStyle();
+      this.config.showToolbarOnTop = true;
+    }
+    this.saveStorage();
   }
 
   createStyle() {
