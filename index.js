@@ -1,5 +1,10 @@
 const { Plugin, Menu } = require("siyuan");
 
+const styleId = "toolbar-plus";
+
+const indentProperty = "custom-tool-plus-indent";
+const columnsProperty = "custom-tool-plus-columns";
+
 let styleContent = `
 .layout-tab-container > .protyle > .protyle-toolbar {
     display: flex !important;
@@ -34,14 +39,15 @@ html[data-theme-mode="dark"][data-dark-theme="Rem Craft"] .protyle-toolbar {
 `;
 for (let i = 0; i < 10; i++) {
   styleContent += `
-    div[custom-tool-plus-indent="${i + 1}"] {
+    [${indentProperty}="${i + 1}"] {
         text-indent: ${i + 1}em;
+    }
+    [${columnsProperty}="${i + 1}"] {
+      columns: ${i + 1};
     }
     `;
 }
-const styleId = "toolbar-plus";
 
-const indentProperty = "custom-tool-plus-indent";
 
 const defaultConf = {
   fixToolbar: true,
@@ -95,6 +101,11 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
   }
 
   async onload() {
+    // add icons
+    this.addIcons(`
+    <symbol id="iconColumnsUp" viewBox="0 0 1024 1024"><path d="M402.295467 0H73.1136A73.3184 73.3184 0 0 0 0 73.1136v877.7728c0.136533 40.3456 32.768 72.977067 73.1136 73.1136h329.181867a73.3184 73.3184 0 0 0 73.1136-73.1136V73.1136A73.3184 73.3184 0 0 0 402.295467 0z m0 914.295467a34.542933 34.542933 0 0 1-36.590934 36.590933h-256a34.542933 34.542933 0 0 1-36.590933-36.590933V109.704533a34.542933 34.542933 0 0 1 36.590933-36.590933h256a34.542933 34.542933 0 0 1 36.590934 36.590933v804.590934zM950.8864 0H621.704533a73.3184 73.3184 0 0 0-73.1136 73.1136v877.7728c0.136533 40.3456 32.768 72.977067 73.1136 73.1136h329.181867A73.3184 73.3184 0 0 0 1024 950.8864V73.1136A73.3184 73.3184 0 0 0 950.8864 0z m0 914.295467a34.542933 34.542933 0 0 1-36.590933 36.590933h-256a34.542933 34.542933 0 0 1-36.590934-36.590933V109.704533a34.542933 34.542933 0 0 1 36.590934-36.590933h256a34.542933 34.542933 0 0 1 36.590933 36.590933v804.590934z" fill="#303030" p-id="7648"></path></symbol>
+    <symbol id="iconColumnsDown" viewBox="0 0 1024 1024"><path d="M406.186667 964.266667H107.52c-25.6 0-47.786667-20.48-47.786667-47.786667V105.813333c0-25.6 20.48-46.08 47.786667-46.08h298.666667c25.6 0 47.786667 20.48 47.786666 46.08v192.853334c0 13.653333-11.946667 25.6-25.6 25.6s-25.6-11.946667-25.6-25.6v-187.733334h-290.133333v802.133334h290.133333v-187.733334c0-13.653333 11.946667-25.6 25.6-25.6s25.6 11.946667 25.6 25.6v192.853334c-1.706667 25.6-22.186667 46.08-47.786666 46.08zM918.186667 964.266667H619.52c-25.6 0-47.786667-20.48-47.786667-47.786667V725.333333c0-13.653333 11.946667-25.6 25.6-25.6s25.6 11.946667 25.6 25.6v187.733334h290.133334v-802.133334h-290.133334v187.733334c0 13.653333-11.946667 25.6-25.6 25.6s-25.6-11.946667-25.6-25.6V105.813333c0-25.6 20.48-46.08 47.786667-46.08h298.666667c25.6 0 47.786667 20.48 47.786666 46.08v810.666667c-1.706667 27.306667-22.186667 47.786667-47.786666 47.786667z" fill="#333333" p-id="5195"></path><path d="M938.666667 537.6H597.333333c-13.653333 0-25.6-11.946667-25.6-25.6s11.946667-25.6 25.6-25.6h341.333334c13.653333 0 25.6 11.946667 25.6 25.6s-11.946667 25.6-25.6 25.6zM426.666667 537.6H107.52c-13.653333 0-25.6-11.946667-25.6-25.6s11.946667-25.6 25.6-25.6H426.666667c13.653333 0 25.6 11.946667 25.6 25.6s-11.946667 25.6-25.6 25.6z" fill="#333333" p-id="5196"></path><path d="M698.026667 640c-6.826667 0-13.653333-1.706667-18.773334-6.826667l-102.4-102.4c-10.24-10.24-10.24-25.6 0-35.84l102.4-102.4c10.24-10.24 25.6-10.24 35.84 0s10.24 25.6 0 35.84L631.466667 512l85.333333 85.333333c10.24 10.24 10.24 25.6 0 35.84-5.12 5.12-11.946667 6.826667-18.773333 6.826667zM327.68 640c-6.826667 0-13.653333-1.706667-18.773333-6.826667-10.24-10.24-10.24-25.6 0-35.84l83.626666-83.626666-83.626666-83.626667c-10.24-10.24-10.24-25.6 0-35.84s25.6-10.24 35.84 0l102.4 102.4c10.24 10.24 10.24 25.6 0 35.84l-102.4 102.4c-3.413333 3.413333-10.24 5.12-17.066667 5.12z" fill="#333333" p-id="5197"></path></symbol>
+    `)
     this.loadStorage().then(() => {
       if (this.config.showToolbarOnTop) {
         this.createStyle();
@@ -197,6 +208,8 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
       this.createDivide(toolbar);
       this.createIndentButton(toolbar);
       this.createOutdentButton(toolbar);
+      this.createColumnsUpButton(toolbar);
+      this.createColumnsDownButton(toolbar);
       this.createUndoButton(toolbar);
       this.createRedoButton(toolbar);
     }
@@ -300,6 +313,50 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
     toolbar.appendChild(button);
   }
 
+  createColumnsUpButton(toolbar) {
+    if (toolbar.querySelector("#columns-up")) {
+      return;
+    }
+    const button = document.createElement("button");
+    button.classList.add(
+      "protyle-toolbar__item",
+      "b3-tooltips",
+      "b3-tooltips__se"
+    );
+    button.setAttribute("aria-label", "增加分栏数");
+    button.innerHTML = '<svg><use xlink:href="#iconColumnsUp"></use></svg>';
+    button.id = "columns-up";
+    button.addEventListener("click", () => {
+      const blocks = this.getSelectedBlocks();
+      if (blocks) {
+        blocks.forEach((b) => this.columnsUp(b));
+      }
+    });
+    toolbar.appendChild(button);
+  }
+
+  createColumnsDownButton(toolbar) {
+    if (toolbar.querySelector("#columns-down")) {
+      return;
+    }
+    const button = document.createElement("button");
+    button.classList.add(
+      "protyle-toolbar__item",
+      "b3-tooltips",
+      "b3-tooltips__se"
+    );
+    button.setAttribute("aria-label", "减少分栏数");
+    button.innerHTML = '<svg><use xlink:href="#iconColumnsDown"></use></svg>';
+    button.id = "columns-down";
+    button.addEventListener("click", () => {
+      const blocks = this.getSelectedBlocks();
+      if (blocks) {
+        blocks.forEach((b) => this.columnsDown(b));
+      }
+    });
+    toolbar.appendChild(button);
+  }
+
   onunload() {
     this.destroyStyle();
     unwatchPageChange();
@@ -310,7 +367,7 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
     if (!current) {
       return null;
     }
-    const selected = current.querySelectorAll(".p.protyle-wysiwyg--select");
+    const selected = current.querySelectorAll(".protyle-wysiwyg--select");
     if (selected && selected.length) {
       const result = [];
       for (const s of selected) {
@@ -361,6 +418,31 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
       i = 0;
     }
     attrs[indentProperty] = `${i}`;
+    await this.writeAttr(block, attrs);
+  }
+
+  async columnsUp(block) {
+    const attrs = await this.readAttrs(block);
+    const indent = attrs[columnsProperty];
+    if (!indent) {
+      attrs[columnsProperty] = "1";
+    } else {
+      attrs[columnsProperty] = `${parseInt(attrs[columnsProperty]) + 1}`;
+    }
+    await this.writeAttr(block, attrs);
+  }
+
+  async columnsDown(block) {
+    const attrs = await this.readAttrs(block);
+    const indent = attrs[columnsProperty];
+    if (!indent) {
+      return;
+    }
+    let i = parseInt(attrs[columnsProperty]) - 1;
+    if (i < 0) {
+      i = 0;
+    }
+    attrs[columnsProperty] = `${i}`;
     await this.writeAttr(block, attrs);
   }
 

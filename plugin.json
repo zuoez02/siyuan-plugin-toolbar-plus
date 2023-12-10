@@ -2,13 +2,13 @@
     "name": "siyuan-plugin-toolbar-plus",
     "author": "zuoez02",
     "url": "https://github.com/zuoez02/siyuan-plugin-toolbar-plus",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "minAppVersion": "2.10.13",
     "displayName": {
         "default": "工具栏Plus"
     },
     "description": {
-        "default": "工具栏置顶，增加缩进控制能力"
+        "default": "可切换工具栏置顶，增加缩进、分栏等排版能力"
     },
     "readme": {
         "default": "README.md"
