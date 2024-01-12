@@ -238,7 +238,7 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
       "b3-tooltips",
       "b3-tooltips__se"
     );
-    button.setAttribute("aria-label", "撤销");
+    button.setAttribute("aria-label", this.i18n.undo);
     button.innerHTML = '<svg><use xlink:href="#iconUndo"></use></svg>';
     button.id = "undo";
     const protyle = this.protyles.get(toolbar);
@@ -261,7 +261,7 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
       "b3-tooltips",
       "b3-tooltips__se"
     );
-    button.setAttribute("aria-label", "重做");
+    button.setAttribute("aria-label", this.i18n.redo);
     button.innerHTML = '<svg><use xlink:href="#iconRedo"></use></svg>';
     button.id = "redo";
     const protyle = this.protyles.get(toolbar);
@@ -285,7 +285,7 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
       "b3-tooltips",
       "b3-tooltips__se"
     );
-    button.setAttribute("aria-label", "缩进");
+    button.setAttribute("aria-label", this.i18n.indent);
     button.innerHTML = '<svg><use xlink:href="#iconIndent"></use></svg>';
     button.id = "indent";
     button.addEventListener("click", () => {
@@ -307,7 +307,7 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
       "b3-tooltips",
       "b3-tooltips__se"
     );
-    button.setAttribute("aria-label", "取消缩进");
+    button.setAttribute("aria-label", this.i18n.outdent);
     button.innerHTML = '<svg><use xlink:href="#iconOutdent"></use></svg>';
     button.id = "outdent";
     button.addEventListener("click", () => {
@@ -329,7 +329,7 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
       "b3-tooltips",
       "b3-tooltips__se"
     );
-    button.setAttribute("aria-label", "增加分栏数");
+    button.setAttribute("aria-label", this.i18n.columnsUp);
     button.innerHTML = '<svg><use xlink:href="#iconColumnsUp"></use></svg>';
     button.id = "columns-up";
     button.addEventListener("click", () => {
@@ -351,7 +351,7 @@ module.exports = class ToolbarPlusPlugin extends Plugin {
       "b3-tooltips",
       "b3-tooltips__se"
     );
-    button.setAttribute("aria-label", "减少分栏数");
+    button.setAttribute("aria-label", this.i18n.columnsDown);
     button.innerHTML = '<svg><use xlink:href="#iconColumnsDown"></use></svg>';
     button.id = "columns-down";
     button.addEventListener("click", () => {
