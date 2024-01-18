@@ -7,7 +7,7 @@ const indentProperty = "custom-tool-plus-indent";
 const columnsProperty = "custom-tool-plus-columns";
 
 let styleContent = `
-.layout-tab-container > .protyle > .protyle-toolbar {
+.layout-tab-container > .protyle:has(.protyle-content .protyle-title__input[contenteditable="true"])  > .protyle-toolbar {
     display: flex !important;
     position: absolute !important;
     top: 30px !important;
