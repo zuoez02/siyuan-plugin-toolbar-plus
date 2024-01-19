@@ -10,7 +10,7 @@ let styleContent = `
 .layout-tab-container > .protyle:has(.protyle-content .protyle-title__input[contenteditable="true"])  > .protyle-toolbar {
     display: flex !important;
     position: absolute !important;
-    top: 30px !important;
+    top: 33px !important;
     padding-left: 6px;
     border-top: 1px solid var(--b3-border-color);
     border-bottom: 1px solid var(--b3-border-color);
@@ -21,18 +21,18 @@ let styleContent = `
     transform: none;
 }
 
-.protyle-content {
-    margin-top: 32px;
+.protyle-content:has(.protyle-title__input[contenteditable="true"]) {
+    margin-top: 33px;
 }
 
-html[data-theme-mode="light"][data-light-theme="Savor"] .protyle-toolbar,
-html[data-theme-mode="dark"][data-dark-theme="Savor"] .protyle-toolbar {
-    top: 42px !important;
-    border-radius: 0;
+html[data-light-theme="Savor"] .layout-tab-container > .protyle:has(.protyle-content .protyle-title__input[contenteditable="true"])  > .protyle-toolbar,
+html[data-light-theme="Savor"] .layout-tab-container > .protyle:has(.protyle-content .protyle-title__input[contenteditable="true"])  > .protyle-toolbar {
+  top: 45px !important;
+  border-radius: 0;
 }
 
-html[data-theme-mode="light"][data-light-theme="Rem Craft"] .protyle-toolbar,
-html[data-theme-mode="dark"][data-dark-theme="Rem Craft"] .protyle-toolbar {
+html[data-light-theme="Rem Craft"] .layout-tab-container > .protyle:has(.protyle-content .protyle-title__input[contenteditable="true"])  > .protyle-toolbar,
+html[data-light-theme="Rem Craft"] .layout-tab-container > .protyle:has(.protyle-content .protyle-title__input[contenteditable="true"])  > .protyle-toolbar {
     top: 40px !important;
     border-radius: 0;
 }
