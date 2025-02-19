@@ -7,6 +7,10 @@ Option to fix the toolbar at the top
 Note: A known possible issue is that when selecting a block, different selection methods may cause the actual effective block to not necessarily be what you think. If it is applied to the outer block, it is recommended to cancel and select the sub-block again for operation
 
 ## Changelog
++ 1.5.3
+1. Fix bugs
++ 1.5.2
+1. Fix bugs
 + 1.5.1
 1. Hide the top toolbar in lock mode(fix bug). 
 + 1.5.0
