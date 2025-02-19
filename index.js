@@ -29,12 +29,14 @@ html[data-light-theme="Savor"] .layout-tab-container > .protyle:has(.protyle-con
 html[data-light-theme="Savor"] .layout-tab-container > .protyle:has(.protyle-content .protyle-title__input[contenteditable="true"])  > .protyle-toolbar {
   top: 45px !important;
   border-radius: 0;
+  z-index: 1;
 }
 
 html[data-light-theme="Rem Craft"] .layout-tab-container > .protyle:has(.protyle-content .protyle-title__input[contenteditable="true"])  > .protyle-toolbar,
 html[data-light-theme="Rem Craft"] .layout-tab-container > .protyle:has(.protyle-content .protyle-title__input[contenteditable="true"])  > .protyle-toolbar {
     top: 40px !important;
     border-radius: 0;
+    z-index: 1;
 }
 `;
 let docStyleContent = '';
